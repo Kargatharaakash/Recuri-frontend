@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web Query Chatbot Frontend
 
-## Getting Started
+A modern Next.js 15 + React 18 chatbot UI for your web query agent.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Chatbot interface with message bubbles, auto-scroll, and loading state
+- Connects to your backend Python API for web search and summarization
+- TypeScript, strict mode, and ready for styling with Tailwind CSS (optional)
+- API route proxy for local development
+
+## Quick Start
+
+1. **Install dependencies:**
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+3. **Backend API:**
+   - Make sure your Python backend is running and exposes a POST `/api/query` endpoint on port 8000.
+
+## Project Structure
+
+```
+frontend/
+├── package.json
+├── tsconfig.json
+├── next-env.d.ts
+├── README.md
+└── src/
+    └── app/
+        ├── page.tsx         # Main chatbot UI
+        ├── api/
+        │   └── query.ts     # API route proxy to backend
+        └── favicon.ico
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Troubleshooting
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **TypeScript errors:**  
+  Run `npm install` to install all types.  
+  If you see "Cannot find module 'react'" or similar, make sure `node_modules` is present.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **API errors:**  
+  Ensure your backend is running at `http://localhost:8000/api/query`.
 
-## Learn More
+- **Styling:**  
+  This UI uses Tailwind CSS classes. If you want to customize, add a `tailwind.config.js` and install Tailwind.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` – Start development server
+- `npm run build` – Build for production
+- `npm run start` – Start production server
+- `npm run lint` – Lint code
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Requirements
 
-## Deploy on Vercel
+- Node.js 18+
+- npm 9+
+- Next.js 15.x
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Built for Ripplica Interview Task**
