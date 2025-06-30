@@ -31,7 +31,7 @@ export default function ChatbotPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/query", {
+      const res = await fetch("https://recuri-backend.onrender.com/api/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: input }),

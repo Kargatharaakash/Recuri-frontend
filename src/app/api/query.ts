@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Forward to backend Python API
-    const backendRes = await fetch("http://localhost:8000/api/query", {
+    // Forward to backend Python API on Render
+    const backendRes = await fetch("https://recuri-backend.onrender.com/api/query", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query }),
