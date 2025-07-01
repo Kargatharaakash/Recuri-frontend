@@ -10,21 +10,18 @@ type MessageBubbleProps = {
 };
 
 function parseResponse(text: string) {
-  // Check if it's a similar query response
   if (text.includes("📋 Found similar query:")) {
     const parts = text.split("📋 Found similar query:");
     if (parts.length > 1) {
       const queryMatch = parts[1].match(/'([^']+)'/);
       const similarQuery = queryMatch ? queryMatch[1] : "";
-      
-      // Split by bullet points and clean up
+
       const results = parts[1]
         .split("•")
-        .slice(1) // Remove the first part which contains the query
+        .slice(1)
         .map(item => item.trim())
         .filter(item => item.length > 0)
         .map(item => {
-          // Extract title and description
           const lines = item.split("\n").filter(line => line.trim());
           const title = lines[0] || "";
           const description = lines.slice(1).join(" ").trim();
@@ -32,17 +29,16 @@ function parseResponse(text: string) {
         });
 
       return {
-        type: "similar",
+        type: "similar" as const,
         similarQuery,
-        results
+        results,
       };
     }
   }
 
-  // Regular response
   return {
-    type: "regular",
-    text
+    type: "regular" as const,
+    text,
   };
 }
 
@@ -86,7 +82,7 @@ export default function MessageBubble({ role, text, index }: MessageBubbleProps)
                     <span>Found similar query: "{parsedResponse.similarQuery}"</span>
                   </div>
                   <div className="space-y-4">
-                    {parsedResponse.results.map((result, idx) => (
+                    {(parsedResponse.results ?? []).map((result, idx) => (
                       <motion.div
                         key={idx}
                         initial={{ opacity: 0, x: -10 }}
