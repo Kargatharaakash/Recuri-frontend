@@ -66,8 +66,8 @@ export default function ChatbotPage() {
       {/* Header */}
       <div className="flex-shrink-0 border-b border-gray-100 bg-white/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Left side - Logo and title */}
+          <div className="flex items-center justify-center relative">
+            {/* Centered Logo and title */}
             <div className="flex items-center space-x-3">
               <div className="relative">
                 <div
@@ -91,8 +91,8 @@ export default function ChatbotPage() {
               </div>
             </div>
 
-            {/* Right side - GitHub links */}
-            <div className="flex items-center space-x-4">
+            {/* Right side - GitHub links (absolute positioned) */}
+            <div className="absolute right-0 flex items-center space-x-4">
               <a
                 href="https://github.com/Kargatharaakash/Recuri-frontend"
                 target="_blank"
@@ -131,22 +131,22 @@ export default function ChatbotPage() {
         <div ref={chatContainerRef} className="h-full overflow-y-auto">
           <div className="max-w-4xl mx-auto px-4">
             {messages.length === 0 ? (
-              <div className="flex items-center justify-center h-full">
+              <div className="flex items-center justify-center h-full min-h-[400px]">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-center max-w-md"
+                  className="text-center max-w-md mx-auto"
                 >
                   <div
-                    className="w-16 h-16 bg-gradient-to-br from-slate-900 to-slate-700
-                                rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl"
+                    className="w-20 h-20 bg-gradient-to-br from-slate-900 to-slate-700
+                                rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-xl"
                   >
-                    <Search size={28} className="text-white" />
+                    <Search size={32} className="text-white" />
                   </div>
-                  <h2 className="text-2xl font-light text-slate-900 mb-3">
+                  <h2 className="text-3xl font-light text-slate-900 mb-4">
                     How can I help you research today?
                   </h2>
-                  <p className="text-slate-600 text-sm font-light leading-relaxed">
+                  <p className="text-slate-600 text-base font-light leading-relaxed">
                     I can search the web, analyze information, and remember
                     context to provide you with precise, intelligent answers.
                   </p>
