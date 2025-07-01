@@ -127,7 +127,7 @@ export function HowItWorksButton({ isOpen, setIsOpen }: HowItWorksProps) {
   return (
     <motion.button
       onClick={() => setIsOpen(!isOpen)}
-      className="bg-slate-900 text-white px-3 py-2 rounded-lg shadow-md hover:bg-slate-800 transition-colors ml-5"
+      className="bg-slate-900 text-white px-3 py-2 rounded-lg shadow-md hover:bg-slate-800 transition-colors"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
