@@ -66,7 +66,7 @@ export default function ChatbotPage() {
       <HowItWorks isOpen={howItWorksOpen} setIsOpen={setHowItWorksOpen} />
       {/* Header */}
       <div className="flex-shrink-0 border-b border-gray-100 bg-white/80 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="w-full px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Left side - How it works button */}
             <div>
@@ -138,7 +138,7 @@ export default function ChatbotPage() {
       {/* Messages Area */}
       <div className="flex-1 overflow-hidden">
         <div ref={chatContainerRef} className="h-full overflow-y-auto">
-          <div className="max-w-4xl mx-auto px-4">
+          <div className="w-full px-6">
             {messages.length === 0 ? (
               <div className="flex items-center justify-center h-full min-h-[400px]">
                 <motion.div
@@ -183,7 +183,7 @@ export default function ChatbotPage() {
 
       {/* Input Area */}
       <div className="flex-shrink-0 border-t border-gray-100 bg-white">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="w-full px-6 py-4">
           <ChatInput onSendMessage={sendMessage} loading={loading} />
         </div>
       </div>
