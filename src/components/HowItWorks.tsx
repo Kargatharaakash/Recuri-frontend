@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { ChevronLeft, ChevronRight, Info, X, ZoomIn, ZoomOut } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 const howItWorksContent = `# Recuri Web Query Agent — Full System Flow
@@ -141,8 +141,54 @@ export function HowItWorksButton({ isOpen, setIsOpen }: HowItWorksProps) {
 }
 
 export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImgSrc, setModalImgSrc] = useState<string | null>(null);
+  const [modalImgAlt, setModalImgAlt] = useState<string | null>(null);
+  // Modal dialog for enlarged image (no zoom controls)
+  const ImageModal = () =>
+    modalOpen && modalImgSrc ? (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div className="relative bg-white rounded-lg shadow-2xl p-4 max-w-3xl w-full flex flex-col items-center">
+          {/* Close button */}
+          <button
+            onClick={() => setModalOpen(false)}
+            className="absolute top-2 right-2 p-2 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+            aria-label="Close"
+          >
+            <X size={24} className="text-slate-700" />
+          </button>
+          {/* Download button in modal */}
+          <a
+            href={modalImgSrc}
+            download={modalImgAlt ? `${modalImgAlt}` : "image"}
+            className="absolute top-2 left-2 bg-white/90 hover:bg-white text-slate-700 rounded-full p-2 shadow transition-colors z-10"
+            title="Download image"
+            onClick={e => e.stopPropagation()}
+          >
+            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M12 5v14m0 0l-5-5m5 5l5-5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+          <img
+            src={modalImgSrc}
+            alt={modalImgAlt || ""}
+            className="max-h-[70vh] w-auto rounded-lg border border-slate-200 shadow"
+            style={{
+              objectFit: "contain",
+            }}
+          />
+          {modalImgAlt && (
+            <span className="block text-xs text-slate-500 mt-2 text-center italic">
+              {modalImgAlt}
+            </span>
+          )}
+        </div>
+      </div>
+    ) : null;
+
   return (
     <>
+      <ImageModal />
       {/* Sidebar */}
       <AnimatePresence>
         {isOpen && (
@@ -268,21 +314,43 @@ export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
                         hr: ({ node, ...props }) => (
                           <hr className="my-4 border-slate-200" {...props} />
                         ),
-                        img: ({ node, src, alt, ...props }) => (
-                          <span className="block my-6">
-                            <img
-                              src={src}
-                              alt={alt}
-                              className="w-full rounded-lg border border-slate-200 shadow-sm"
-                              {...props}
-                            />
-                            {alt && (
-                              <span className="block text-xs text-slate-500 mt-2 text-center italic">
-                                {alt}
-                              </span>
-                            )}
-                          </span>
-                        ),
+img: ({ node, src, alt, ...props }) => (
+  <span className="block my-6 relative group">
+    <img
+      src={src}
+      alt={alt}
+      className="w-full rounded-lg border border-slate-200 shadow-sm cursor-pointer transition-transform group-hover:scale-105"
+      style={{ transition: "transform 0.2s" }}
+      onClick={() => {
+        setModalImgSrc(src || "");
+        setModalImgAlt(alt || "");
+        setModalOpen(true);
+      }}
+    />
+    {/* Download button */}
+    <a
+      href={src}
+      download={alt ? `${alt}` : "image"}
+      className="absolute top-2 left-2 bg-white/90 hover:bg-white text-slate-700 rounded-full p-1 shadow transition-colors z-10"
+      title="Download image"
+      onClick={e => e.stopPropagation()}
+    >
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 5v14m0 0l-5-5m5 5l5-5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </a>
+    {/* Tap to enlarge icon and text */}
+    <span className="absolute top-2 right-2 flex items-center gap-1 bg-black/70 text-xs text-white rounded px-2 py-1 opacity-90 group-hover:opacity-100 transition-opacity pointer-events-none select-none z-10">
+      <ZoomIn size={14} className="inline-block mr-1" />
+      Tap to enlarge
+    </span>
+    {alt && (
+      <span className="block text-xs text-slate-500 mt-2 text-center italic">
+        {alt}
+      </span>
+    )}
+  </span>
+),
                       }}
                     >
                       {howItWorksContent}
