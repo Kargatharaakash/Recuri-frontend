@@ -72,16 +72,24 @@ export default function MessageBubble({
                 <StreamingText text={text} speed={25} />
               </div>
               <button
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition bg-slate-200 hover:bg-slate-300 rounded p-1"
+                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg p-2 shadow-sm hover:shadow-md"
                 onClick={handleCopy}
-                title="Copy"
+                title={copied ? "Copied!" : "Copy to clipboard"}
               >
                 {copied ? (
-                  <span className="text-xs text-emerald-600 font-medium">
-                    Copied!
-                  </span>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-3 h-3 rounded-full bg-emerald-500 flex items-center justify-center">
+                      <div className="w-1 h-1 bg-white rounded-full"></div>
+                    </div>
+                    <span className="text-xs text-emerald-600 font-medium">
+                      Copied
+                    </span>
+                  </div>
                 ) : (
-                  <Copy size={14} className="text-slate-500" />
+                  <Copy
+                    size={14}
+                    className="text-slate-600 hover:text-slate-800"
+                  />
                 )}
               </button>
             </div>
