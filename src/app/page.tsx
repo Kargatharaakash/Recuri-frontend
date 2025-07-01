@@ -112,8 +112,8 @@ export default function ChatbotPage() {
             className="text-center mt-6"
           >
             <p className="text-xs text-slate-500 font-light">
-              Ripplica Interview Task • 
-              <span className="text-slate-700"> Advanced Web Intelligence</span>
+              Built with Next.js & AI • 
+              <span className="text-slate-700"> Powered by Advanced Intelligence</span>
             </p>
           </motion.div>
         </motion.div>
