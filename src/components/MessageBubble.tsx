@@ -3,9 +3,12 @@
 import { motion } from "framer-motion";
 import { User, Search } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Copy } from "lucide-react";
 import { useState } from "react";
+
+// Import remarkGfm from the correct location to avoid type conflicts
+import * as remarkGfmImport from "remark-gfm";
+const remarkGfm = (remarkGfmImport.default || remarkGfmImport) as any;
 
 type MessageBubbleProps = {
   role: "user" | "agent";
