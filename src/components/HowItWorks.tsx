@@ -204,12 +204,40 @@ export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
                             {...props}
                           />
                         ),
-                        p: ({ node, ...props }) => (
-                          <p
-                            className="text-sm text-slate-600 mb-3 leading-relaxed"
-                            {...props}
-                          />
-                        ),
+                        p: ({ node, children, ...props }) => {
+                          // Check if this paragraph contains an image
+                          const hasImage = React.Children.toArray(
+                            children,
+                          ).some(
+                            (child) =>
+                              React.isValidElement(child) &&
+                              (child.type === "img" ||
+                                (typeof child === "object" &&
+                                  child.props &&
+                                  child.props.src)),
+                          );
+
+                          if (hasImage) {
+                            // If paragraph contains an image, render as div to avoid nesting issues
+                            return (
+                              <div
+                                className="text-sm text-slate-600 mb-3 leading-relaxed"
+                                {...props}
+                              >
+                                {children}
+                              </div>
+                            );
+                          }
+
+                          return (
+                            <p
+                              className="text-sm text-slate-600 mb-3 leading-relaxed"
+                              {...props}
+                            >
+                              {children}
+                            </p>
+                          );
+                        },
                         ul: ({ node, ...props }) => (
                           <ul
                             className="text-sm text-slate-600 mb-3 pl-4"
@@ -241,7 +269,7 @@ export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
                           <hr className="my-4 border-slate-200" {...props} />
                         ),
                         img: ({ node, src, alt, ...props }) => (
-                          <div className="my-6">
+                          <span className="block my-6">
                             <img
                               src={src}
                               alt={alt}
@@ -249,11 +277,11 @@ export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
                               {...props}
                             />
                             {alt && (
-                              <p className="text-xs text-slate-500 mt-2 text-center italic">
+                              <span className="block text-xs text-slate-500 mt-2 text-center italic">
                                 {alt}
-                              </p>
+                              </span>
                             )}
-                          </div>
+                          </span>
                         ),
                       }}
                     >
