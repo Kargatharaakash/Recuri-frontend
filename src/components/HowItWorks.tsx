@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Info } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 const howItWorksContent = `# Recuri Web Query Agent — Full System Flow
 
@@ -159,7 +158,6 @@ export default function HowItWorks() {
                 <div className="flex-1 overflow-y-auto p-6">
                   <div className="prose prose-slate prose-sm max-w-none">
                     <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
                       components={{
                         h1: ({ node, ...props }) => (
                           <h1
