@@ -5,10 +5,7 @@ import { User, Search } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Copy } from "lucide-react";
 import { useState } from "react";
-
-// Import remarkGfm from the correct location to avoid type conflicts
-import * as remarkGfmImport from "remark-gfm";
-const remarkGfm = (remarkGfmImport.default || remarkGfmImport) as any;
+import StreamingText from "./StreamingText";
 
 type MessageBubbleProps = {
   role: "user" | "agent";
@@ -16,14 +13,30 @@ type MessageBubbleProps = {
   index: number;
 };
 
-export default function MessageBubble({ role, text, index }: MessageBubbleProps) {
+export default function MessageBubble({
+  role,
+  text,
+  index,
+}: MessageBubbleProps) {
   const isUser = role === "user";
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (
@@ -37,17 +50,17 @@ export default function MessageBubble({ role, text, index }: MessageBubbleProps)
       }}
       className={`flex ${isUser ? "justify-end" : "justify-start"} mb-8`}
     >
-      <div className={`flex items-start space-x-4 max-w-[85%] ${isUser ? "flex-row-reverse space-x-reverse" : ""}`}>
+      <div
+        className={`flex items-start space-x-4 max-w-[85%] ${isUser ? "flex-row-reverse space-x-reverse" : ""}`}
+      >
         <div
           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-            isUser 
-              ? "bg-slate-900 text-white" 
-              : "bg-slate-100 text-slate-600"
+            isUser ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600"
           }`}
         >
           {isUser ? <User size={16} /> : <Search size={16} />}
         </div>
-        
+
         <div className={`${isUser ? "text-right" : ""}`}>
           {isUser ? (
             <div className="bg-slate-900 text-white px-4 py-3 rounded-2xl rounded-tr-md">
@@ -55,18 +68,28 @@ export default function MessageBubble({ role, text, index }: MessageBubbleProps)
             </div>
           ) : (
             <div className="relative group">
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-md px-4 py-3 prose prose-slate max-w-none text-slate-800 text-sm font-light leading-relaxed whitespace-pre-wrap">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-md px-4 py-3 whitespace-pre-wrap">
+                <StreamingText text={text} speed={5} />
               </div>
               <button
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition bg-slate-200 hover:bg-slate-300 rounded p-1"
+                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg p-2 shadow-sm hover:shadow-md"
                 onClick={handleCopy}
-                title="Copy"
+                title={copied ? "Copied!" : "Copy to clipboard"}
               >
                 {copied ? (
-                  <span className="text-xs text-emerald-600 font-medium">Copied!</span>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-3 h-3 rounded-full bg-emerald-500 flex items-center justify-center">
+                      <div className="w-1 h-1 bg-white rounded-full"></div>
+                    </div>
+                    <span className="text-xs text-emerald-600 font-medium">
+                      Copied
+                    </span>
+                  </div>
                 ) : (
-                  <Copy size={14} className="text-slate-500" />
+                  <Copy
+                    size={14}
+                    className="text-slate-600 hover:text-slate-800"
+                  />
                 )}
               </button>
             </div>
