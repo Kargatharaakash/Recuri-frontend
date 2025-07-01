@@ -69,7 +69,7 @@ export default function MessageBubble({
           ) : (
             <div className="relative group">
               <div className="bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-md px-4 py-3 whitespace-pre-wrap">
-                <StreamingText text={text} speed={25} />
+                <StreamingText text={text} speed={5} />
               </div>
               <button
                 className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg p-2 shadow-sm hover:shadow-md"
