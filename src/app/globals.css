@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +10,7 @@
   
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -18,47 +18,7 @@
   }
 }
 
-@layer components {
-  .glass-effect {
-    @apply bg-white/80 backdrop-blur-xl border border-white/20;
-  }
-  
-  .gradient-border {
-    position: relative;
-    background: linear-gradient(white, white) padding-box,
-                linear-gradient(135deg, #0ea5e9, #3b82f6, #8b5cf6) border-box;
-    border: 1px solid transparent;
-  }
-  
-  .message-bubble {
-    @apply relative px-4 py-3 rounded-2xl max-w-[85%] break-words;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
-  
-  .user-message {
-    @apply bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-medium;
-  }
-  
-  .agent-message {
-    @apply bg-white border border-gray-200/60 text-gray-800 shadow-soft;
-  }
-  
-  .typing-indicator {
-    @apply flex items-center space-x-1;
-  }
-  
-  .typing-dot {
-    @apply w-2 h-2 bg-gray-400 rounded-full animate-pulse;
-    animation-delay: var(--delay);
-  }
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -69,27 +29,9 @@
   }
 }
 
-/* Custom scrollbar for chat area */
-.chat-scroll::-webkit-scrollbar {
-  width: 4px;
-}
-
-.chat-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.chat-scroll::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
-  border-radius: 2px;
-}
-
-.chat-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
-}
-
 /* Smooth transitions */
 * {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, opacity, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }

@@ -16,7 +16,7 @@ export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "agent",
-      text: "Hello! I'm your AI web assistant. I can search the internet, analyze information, and provide you with comprehensive answers to any question you have. What would you like to know today?",
+      text: "I'm Recuri, your intelligent web research assistant. I search, analyze, and remember information to provide you with precise, contextual answers. What would you like to research today?",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -46,7 +46,7 @@ export default function ChatbotPage() {
         ...msgs,
         { 
           role: "agent", 
-          text: data.result || "I apologize, but I couldn't find a comprehensive answer to your question. Please try rephrasing or asking something else." 
+          text: data.result || "I couldn't find comprehensive information for your query. Please try rephrasing or asking something more specific." 
         },
       ]);
     } catch (err) {
@@ -54,7 +54,7 @@ export default function ChatbotPage() {
         ...msgs,
         { 
           role: "agent", 
-          text: "I'm experiencing some technical difficulties at the moment. Please try again in a few moments, or rephrase your question." 
+          text: "I'm experiencing connectivity issues. Please try again in a moment." 
         },
       ]);
     } finally {
@@ -63,26 +63,26 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.15)_1px,transparent_0)] 
-                    [background-size:24px_24px] pointer-events-none" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-stone-100">
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] 
+                    bg-[size:24px_24px] pointer-events-none" />
       
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-6">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="w-full max-w-4xl mx-auto"
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="w-full max-w-3xl mx-auto"
         >
           {/* Chat Container */}
-          <div className="glass-effect rounded-3xl shadow-large p-8 h-[85vh] flex flex-col">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 h-[82vh] flex flex-col">
             <ChatHeader />
             
             {/* Messages Area */}
             <div 
               ref={chatContainerRef}
-              className="flex-1 overflow-y-auto chat-scroll px-2 -mx-2"
+              className="flex-1 overflow-y-auto scrollbar-hide px-1 -mx-1"
             >
               <AnimatePresence mode="popLayout">
                 {messages.map((msg, i) => (
@@ -99,7 +99,7 @@ export default function ChatbotPage() {
             </div>
             
             {/* Input Area */}
-            <div className="mt-6 pt-6 border-t border-gray-200/60">
+            <div className="mt-6 pt-6 border-t border-slate-200/60">
               <ChatInput onSendMessage={sendMessage} loading={loading} />
             </div>
           </div>
@@ -108,12 +108,12 @@ export default function ChatbotPage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 0.6 }}
             className="text-center mt-6"
           >
-            <p className="text-sm text-gray-500">
-              Built with Next.js, Tailwind CSS, and Framer Motion • 
-              <span className="text-primary-600 font-medium"> Powered by Advanced AI</span>
+            <p className="text-xs text-slate-500 font-light">
+              Ripplica Interview Task • 
+              <span className="text-slate-700"> Advanced Web Intelligence</span>
             </p>
           </motion.div>
         </motion.div>

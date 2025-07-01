@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { User, Bot } from "lucide-react";
+import { User, Search } from "lucide-react";
 
 type MessageBubbleProps = {
   role: "user" | "agent";
@@ -14,39 +14,37 @@ export default function MessageBubble({ role, text, index }: MessageBubbleProps)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.4,
-        delay: index * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        duration: 0.3,
+        delay: index * 0.05,
+        ease: "easeOut",
       }}
-      className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4`}
+      className={`flex ${isUser ? "justify-end" : "justify-start"} mb-6`}
     >
-      <div className={`flex items-end space-x-2 max-w-[85%] ${isUser ? "flex-row-reverse space-x-reverse" : ""}`}>
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+      <div className={`flex items-start space-x-3 max-w-[80%] ${isUser ? "flex-row-reverse space-x-reverse" : ""}`}>
+        <div
+          className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center ${
             isUser 
-              ? "bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-medium" 
-              : "bg-white border-2 border-gray-200 text-primary-600 shadow-soft"
+              ? "bg-slate-900 text-white" 
+              : "bg-slate-100 text-slate-600"
           }`}
         >
-          {isUser ? <User size={16} /> : <Bot size={16} />}
-        </motion.div>
+          {isUser ? <User size={14} /> : <Search size={14} />}
+        </div>
         
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          className={`message-bubble ${isUser ? "user-message" : "agent-message"}`}
-          style={{
-            borderBottomLeftRadius: isUser ? "16px" : "4px",
-            borderBottomRightRadius: isUser ? "4px" : "16px",
-          }}
+        <div
+          className={`px-4 py-3 rounded-xl ${
+            isUser 
+              ? "bg-slate-900 text-white" 
+              : "bg-slate-50 text-slate-800 border border-slate-200"
+          }`}
         >
-          <p className={`text-sm leading-relaxed ${isUser ? "text-white" : "text-gray-800"}`}>
+          <p className="text-sm leading-relaxed font-light">
             {text}
           </p>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );

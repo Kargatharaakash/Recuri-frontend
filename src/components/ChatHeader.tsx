@@ -1,55 +1,45 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, Globe } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 
 export default function ChatHeader() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="text-center mb-8"
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="text-center mb-12"
     >
-      <div className="flex items-center justify-center mb-4">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="relative"
-        >
-          <div className="w-16 h-16 bg-gradient-to-br from-primary-500 via-primary-600 to-purple-600 
-                        rounded-2xl shadow-large flex items-center justify-center">
-            <Sparkles size={28} className="text-white" />
+      <div className="flex items-center justify-center mb-6">
+        <div className="relative">
+          <div className="w-14 h-14 bg-gradient-to-br from-slate-900 to-slate-700 
+                        rounded-xl flex items-center justify-center shadow-2xl">
+            <Search size={24} className="text-white" />
           </div>
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-1 -right-1 w-6 h-6 bg-green-400 rounded-full 
-                     flex items-center justify-center shadow-medium"
-          >
-            <Globe size={12} className="text-white" />
-          </motion.div>
-        </motion.div>
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full 
+                     flex items-center justify-center">
+            <Sparkles size={10} className="text-white" />
+          </div>
+        </div>
       </div>
       
       <motion.h1
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-primary-700 to-purple-700 
-                 bg-clip-text text-transparent mb-2"
+        transition={{ delay: 0.1 }}
+        className="text-4xl font-light tracking-tight text-slate-900 mb-3"
       >
-        AI Web Assistant
+        Recuri
       </motion.h1>
       
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="text-gray-600 text-base leading-relaxed max-w-md mx-auto text-balance"
+        transition={{ delay: 0.2 }}
+        className="text-slate-600 text-sm font-light max-w-sm mx-auto leading-relaxed"
       >
-        Ask me anything and I'll search the web in real-time to provide you with accurate, 
-        up-to-date information and insights.
+        Intelligent web research that remembers, learns, and delivers precise answers instantly.
       </motion.p>
     </motion.div>
   );
