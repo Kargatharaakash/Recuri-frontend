@@ -66,53 +66,46 @@ export default function ChatbotPage() {
       <HowItWorks isOpen={howItWorksOpen} setIsOpen={setHowItWorksOpen} />
       {/* Header */}
       <div className="flex-shrink-0 border-b border-gray-100 bg-white/80 backdrop-blur-sm">
-        <div className="w-full px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Left side - How it works button */}
-            <div>
+        <div className="w-full px-3 py-2 sm:px-6 sm:py-4 relative">
+          {/* 
+            Header row: always flex-row, align items center, 
+            and space between for mobile and desktop.
+            Recuri is always in the center of the screen, HowItWorks always left, GitHub always right.
+          */}
+          <div className="flex flex-row items-center justify-between gap-2 relative">
+            {/* Left: How it works */}
+            <div className="flex items-center z-10">
               <HowItWorksButton
                 isOpen={howItWorksOpen}
                 setIsOpen={setHowItWorksOpen}
               />
             </div>
-
-            {/* Center - Logo and title */}
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <div
-                  className="w-8 h-8 bg-gradient-to-br from-slate-900 to-slate-700
-                              rounded-lg flex items-center justify-center"
-                >
-                  <Search size={16} className="text-white" />
-                </div>
-                <div
-                  className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full
-                           flex items-center justify-center"
-                >
-                  <Sparkles size={6} className="text-white" />
-                </div>
-              </div>
-              <div>
-                <h1 className="text-xl font-medium text-slate-900">Recuri</h1>
-                <p className="text-xs text-slate-500 font-light">
-                  Intelligent Web Research
-                </p>
-              </div>
+            {/* Center: Recuri title absolutely centered on screen */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none select-none">
+              <h1
+                className="text-2xl sm:text-3xl font-black text-slate-900 text-center"
+                style={{
+                  fontFamily: "'Playfair Display', 'Georgia', serif",
+                  letterSpacing: "0.01em",
+                }}
+              >
+                Recuri
+              </h1>
             </div>
-
-            {/* Right side - GitHub links */}
-            <div className="flex items-center space-x-4">
+            {/* Right: GitHub links (always visible, stacked for desktop, row for mobile) */}
+            <div className="flex items-center space-x-2 sm:space-x-4 z-10">
               <a
                 href="https://github.com/Kargatharaakash/Recuri-frontend"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center space-y-1 p-2 rounded-lg hover:bg-slate-50 transition-colors group"
+                className="flex flex-col sm:flex-col items-center space-y-0 sm:space-y-1 p-2 rounded-lg hover:bg-slate-50 transition-colors group"
+                aria-label="Frontend GitHub"
               >
                 <Github
                   size={18}
                   className="text-slate-600 group-hover:text-slate-900"
                 />
-                <span className="text-xs text-slate-500 group-hover:text-slate-700 font-medium">
+                <span className="hidden sm:block text-xs text-slate-500 group-hover:text-slate-700 font-medium">
                   Frontend
                 </span>
               </a>
@@ -120,13 +113,14 @@ export default function ChatbotPage() {
                 href="https://github.com/Kargatharaakash/Recuri-backend"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center space-y-1 p-2 rounded-lg hover:bg-slate-50 transition-colors group"
+                className="flex flex-col sm:flex-col items-center space-y-0 sm:space-y-1 p-2 rounded-lg hover:bg-slate-50 transition-colors group"
+                aria-label="Backend GitHub"
               >
                 <Github
                   size={18}
                   className="text-slate-600 group-hover:text-slate-900"
                 />
-                <span className="text-xs text-slate-500 group-hover:text-slate-700 font-medium">
+                <span className="hidden sm:block text-xs text-slate-500 group-hover:text-slate-700 font-medium">
                   Backend
                 </span>
               </a>
@@ -138,9 +132,9 @@ export default function ChatbotPage() {
       {/* Messages Area */}
       <div className="flex-1 overflow-hidden">
         <div ref={chatContainerRef} className="h-full overflow-y-auto">
-          <div className="w-full px-6">
+          <div className="w-full px-3 sm:px-6">
             {messages.length === 0 ? (
-              <div className="flex items-center justify-center h-full min-h-[400px]">
+              <div className="flex items-center justify-center h-full min-h-[300px] sm:min-h-[400px]">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -162,7 +156,7 @@ export default function ChatbotPage() {
                 </motion.div>
               </div>
             ) : (
-              <div className="py-8">
+              <div className="py-6 sm:py-8">
                 <AnimatePresence mode="popLayout">
                   {messages.map((msg, i) => (
                     <MessageBubble
@@ -183,7 +177,7 @@ export default function ChatbotPage() {
 
       {/* Input Area */}
       <div className="flex-shrink-0 border-t border-gray-100 bg-white">
-        <div className="w-full px-6 py-4">
+        <div className="w-full px-3 py-3 sm:px-6 sm:py-4">
           <ChatInput onSendMessage={sendMessage} loading={loading} />
         </div>
       </div>

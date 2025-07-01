@@ -28,7 +28,7 @@ export default function ChatInput({ onSendMessage, loading }: ChatInputProps) {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Message Recuri..."
           disabled={loading}
-          className="w-full pl-4 pr-12 py-3 bg-white border border-gray-200 rounded-xl 
+          className="w-full pl-4 pr-12 py-2 sm:py-3 bg-white border border-gray-200 rounded-xl 
                    focus:outline-none focus:ring-1 focus:ring-slate-300 focus:border-slate-300
                    disabled:opacity-50 disabled:cursor-not-allowed
                    text-slate-800 placeholder-slate-500
@@ -41,7 +41,7 @@ export default function ChatInput({ onSendMessage, loading }: ChatInputProps) {
           disabled={loading || !input.trim()}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="absolute right-2 p-2 bg-slate-900 text-white rounded-lg 
+          className="absolute right-2 p-2 sm:p-2.5 bg-slate-900 text-white rounded-lg 
                    disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100
                    transition-all duration-200 shadow-sm"
         >

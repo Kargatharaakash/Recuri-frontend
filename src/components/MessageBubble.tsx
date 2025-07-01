@@ -51,7 +51,7 @@ export default function MessageBubble({
       className={`flex ${isUser ? "justify-end" : "justify-start"} mb-8`}
     >
       <div
-        className={`flex items-start space-x-4 max-w-[85%] ${isUser ? "flex-row-reverse space-x-reverse" : ""}`}
+        className={`flex items-start space-x-3 sm:space-x-4 max-w-[90%] md:max-w-[70%] ${isUser ? "flex-row-reverse space-x-reverse" : ""}`}
       >
         <div
           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
@@ -63,35 +63,36 @@ export default function MessageBubble({
 
         <div className={`${isUser ? "text-right" : ""}`}>
           {isUser ? (
-            <div className="bg-slate-900 text-white px-4 py-3 rounded-2xl rounded-tr-md">
+            <div className="bg-slate-900 text-white px-3 py-2 sm:px-4 sm:py-3 rounded-2xl rounded-tr-md break-words">
               <p className="text-sm font-light leading-relaxed">{text}</p>
             </div>
           ) : (
             <div className="relative group">
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-md px-4 py-3 whitespace-pre-wrap">
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-md px-3 py-2 sm:px-4 sm:py-3 whitespace-pre-wrap break-words relative">
                 <StreamingText text={text} speed={5} />
-              </div>
-              <button
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg p-2 shadow-sm hover:shadow-md"
-                onClick={handleCopy}
-                title={copied ? "Copied!" : "Copy to clipboard"}
-              >
-                {copied ? (
-                  <div className="flex items-center space-x-1">
-                    <div className="w-3 h-3 rounded-full bg-emerald-500 flex items-center justify-center">
-                      <div className="w-1 h-1 bg-white rounded-full"></div>
+                <button
+                  className="absolute top-2 right-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg p-2 shadow-sm hover:shadow-md transition-all duration-200
+                    opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                  onClick={handleCopy}
+                  title={copied ? "Copied!" : "Copy to clipboard"}
+                >
+                  {copied ? (
+                    <div className="flex items-center space-x-1">
+                      <div className="w-3 h-3 rounded-full bg-emerald-500 flex items-center justify-center">
+                        <div className="w-1 h-1 bg-white rounded-full"></div>
+                      </div>
+                      <span className="text-xs text-emerald-600 font-medium">
+                        Copied
+                      </span>
                     </div>
-                    <span className="text-xs text-emerald-600 font-medium">
-                      Copied
-                    </span>
-                  </div>
-                ) : (
-                  <Copy
-                    size={14}
-                    className="text-slate-600 hover:text-slate-800"
-                  />
-                )}
-              </button>
+                  ) : (
+                    <Copy
+                      size={14}
+                      className="text-slate-600 hover:text-slate-800"
+                    />
+                  )}
+                </button>
+              </div>
             </div>
           )}
         </div>
