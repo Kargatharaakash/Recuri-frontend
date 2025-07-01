@@ -97,25 +97,31 @@ This document explains the **end-to-end flow** of the Recuri Web Query Agent, co
 
 **This flow ensures a robust, production-ready, and user-friendly web query agent, meeting all Ripplica task requirements.**`;
 
-export default function HowItWorks() {
-  const [isOpen, setIsOpen] = useState(false);
+interface HowItWorksProps {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}
 
+export function HowItWorksButton({ isOpen, setIsOpen }: HowItWorksProps) {
+  return (
+    <motion.button
+      onClick={() => setIsOpen(!isOpen)}
+      className="bg-slate-900 text-white px-3 py-2 rounded-lg shadow-md hover:bg-slate-800 transition-colors"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <div className="flex items-center space-x-2">
+        <Info size={14} />
+        <span className="text-sm font-medium">How it works</span>
+        {isOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+      </div>
+    </motion.button>
+  );
+}
+
+export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
   return (
     <>
-      {/* Toggle Button */}
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-20 left-4 z-50 bg-slate-900 text-white p-3 rounded-xl shadow-lg hover:bg-slate-800 transition-colors"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <div className="flex items-center space-x-2">
-          <Info size={16} />
-          <span className="text-sm font-medium">How it works</span>
-          {isOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
-        </div>
-      </motion.button>
-
       {/* Sidebar */}
       <AnimatePresence>
         {isOpen && (

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import MessageBubble from "../components/MessageBubble";
 import TypingIndicator from "../components/TypingIndicator";
 import ChatInput from "../components/ChatInput";
-import HowItWorks from "../components/HowItWorks";
+import HowItWorks, { HowItWorksButton } from "../components/HowItWorks";
 import { Search, Sparkles, Github } from "lucide-react";
 
 type Message = {
@@ -16,6 +16,7 @@ type Message = {
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
+  const [howItWorksOpen, setHowItWorksOpen] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -62,12 +63,20 @@ export default function ChatbotPage() {
 
   return (
     <div className="flex flex-col h-screen bg-white">
-      <HowItWorks />
+      <HowItWorks isOpen={howItWorksOpen} setIsOpen={setHowItWorksOpen} />
       {/* Header */}
       <div className="flex-shrink-0 border-b border-gray-100 bg-white/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-center relative">
-            {/* Centered Logo and title */}
+          <div className="flex items-center justify-between">
+            {/* Left side - How it works button */}
+            <div>
+              <HowItWorksButton
+                isOpen={howItWorksOpen}
+                setIsOpen={setHowItWorksOpen}
+              />
+            </div>
+
+            {/* Center - Logo and title */}
             <div className="flex items-center space-x-3">
               <div className="relative">
                 <div
@@ -91,8 +100,8 @@ export default function ChatbotPage() {
               </div>
             </div>
 
-            {/* Right side - GitHub links (absolute positioned) */}
-            <div className="absolute right-0 flex items-center space-x-4">
+            {/* Right side - GitHub links */}
+            <div className="flex items-center space-x-4">
               <a
                 href="https://github.com/Kargatharaakash/Recuri-frontend"
                 target="_blank"
