@@ -95,6 +95,27 @@ This document explains the **end-to-end flow** of the Recuri Web Query Agent, co
 
 ---
 
+## 📊 Visual System Architecture
+
+The following diagrams illustrate the complete system flow and decision logic:
+
+### Component Flow Overview
+This diagram shows the three main processing stages: input validation, embeddings/search, and result handling.
+
+![System Component Flow](https://cdn.builder.io/api/v1/image/assets%2F328c7bb534cd44c7a815863608f1f2d3%2F416fc05ab7384eebac046255299e9402?format=webp&width=800)
+
+### Detailed Process Flow
+Complete technical flow from CLI interaction through query validation, similarity search, web scraping, and result storage.
+
+![Detailed System Flow](https://cdn.builder.io/api/v1/image/assets%2F328c7bb534cd44c7a815863608f1f2d3%2Fba791fb166dd4662a36c0e66bff31300?format=webp&width=800)
+
+### Decision Tree Logic
+Simplified decision flow showing query validation and processing paths.
+
+![Decision Logic Flow](https://cdn.builder.io/api/v1/image/assets%2F328c7bb534cd44c7a815863608f1f2d3%2F8c7baef4573e4e3f95eafe6e01a34c80?format=webp&width=800)
+
+---
+
 **This flow ensures a robust, production-ready, and user-friendly web query agent, meeting all Ripplica task requirements.**`;
 
 interface HowItWorksProps {
@@ -141,7 +162,7 @@ export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed left-0 top-0 h-full w-96 bg-white shadow-2xl z-50 overflow-hidden"
+              className="fixed left-0 top-0 h-full w-[480px] bg-white shadow-2xl z-50 overflow-hidden"
             >
               <div className="h-full flex flex-col">
                 {/* Header */}
@@ -218,6 +239,21 @@ export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
                         ),
                         hr: ({ node, ...props }) => (
                           <hr className="my-4 border-slate-200" {...props} />
+                        ),
+                        img: ({ node, src, alt, ...props }) => (
+                          <div className="my-6">
+                            <img
+                              src={src}
+                              alt={alt}
+                              className="w-full rounded-lg border border-slate-200 shadow-sm"
+                              {...props}
+                            />
+                            {alt && (
+                              <p className="text-xs text-slate-500 mt-2 text-center italic">
+                                {alt}
+                              </p>
+                            )}
+                          </div>
                         ),
                       }}
                     >
