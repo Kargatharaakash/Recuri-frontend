@@ -247,7 +247,7 @@ export default function HowItWorks({ isOpen, setIsOpen }: HowItWorksProps) {
                         li: ({ node, ...props }) => (
                           <li className="mb-1" {...props} />
                         ),
-                        code: ({ node, inline, ...props }) =>
+                        code: ({ inline = false, ...props }: { inline?: boolean } & React.HTMLAttributes<HTMLElement>) =>
                           inline ? (
                             <code
                               className="bg-slate-100 text-slate-800 px-1 py-0.5 rounded text-xs font-mono"
