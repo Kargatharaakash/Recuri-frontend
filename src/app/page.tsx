@@ -2,10 +2,10 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ChatHeader from "../components/ChatHeader";
 import MessageBubble from "../components/MessageBubble";
 import TypingIndicator from "../components/TypingIndicator";
 import ChatInput from "../components/ChatInput";
+import { Search, Sparkles } from "lucide-react";
 
 type Message = {
   role: "user" | "agent";
@@ -13,12 +13,7 @@ type Message = {
 };
 
 export default function ChatbotPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "agent",
-      text: "I'm Recuri, your intelligent web research assistant. I search, analyze, and remember information to provide you with precise, contextual answers. What would you like to research today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -63,60 +58,80 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-stone-100">
-      {/* Subtle grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] 
-                    bg-[size:24px_24px] pointer-events-none" />
-      
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="w-full max-w-3xl mx-auto"
-        >
-          {/* Chat Container */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 h-[82vh] flex flex-col">
-            <ChatHeader />
-            
-            {/* Messages Area */}
-            <div 
-              ref={chatContainerRef}
-              className="flex-1 overflow-y-auto scrollbar-hide px-1 -mx-1"
-            >
-              <AnimatePresence mode="popLayout">
-                {messages.map((msg, i) => (
-                  <MessageBubble
-                    key={i}
-                    role={msg.role}
-                    text={msg.text}
-                    index={i}
-                  />
-                ))}
-                {loading && <TypingIndicator />}
-              </AnimatePresence>
-              <div ref={chatEndRef} />
+    <div className="flex flex-col h-screen bg-white">
+      {/* Header */}
+      <div className="flex-shrink-0 border-b border-gray-100 bg-white/80 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-center space-x-3">
+            <div className="relative">
+              <div className="w-8 h-8 bg-gradient-to-br from-slate-900 to-slate-700 
+                            rounded-lg flex items-center justify-center">
+                <Search size={16} className="text-white" />
+              </div>
+              <div className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full 
+                         flex items-center justify-center">
+                <Sparkles size={6} className="text-white" />
+              </div>
             </div>
-            
-            {/* Input Area */}
-            <div className="mt-6 pt-6 border-t border-slate-200/60">
-              <ChatInput onSendMessage={sendMessage} loading={loading} />
+            <div>
+              <h1 className="text-xl font-medium text-slate-900">Recuri</h1>
+              <p className="text-xs text-slate-500 font-light">Intelligent Web Research</p>
             </div>
           </div>
-          
-          {/* Footer */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="text-center mt-6"
-          >
-            <p className="text-xs text-slate-500 font-light">
-              Built with Next.js & AI • 
-              <span className="text-slate-700"> Powered by Advanced Intelligence</span>
-            </p>
-          </motion.div>
-        </motion.div>
+        </div>
+      </div>
+
+      {/* Messages Area */}
+      <div className="flex-1 overflow-hidden">
+        <div 
+          ref={chatContainerRef}
+          className="h-full overflow-y-auto"
+        >
+          <div className="max-w-4xl mx-auto px-4">
+            {messages.length === 0 ? (
+              <div className="flex items-center justify-center h-full">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center max-w-md"
+                >
+                  <div className="w-16 h-16 bg-gradient-to-br from-slate-900 to-slate-700 
+                                rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <Search size={28} className="text-white" />
+                  </div>
+                  <h2 className="text-2xl font-light text-slate-900 mb-3">
+                    How can I help you research today?
+                  </h2>
+                  <p className="text-slate-600 text-sm font-light leading-relaxed">
+                    I can search the web, analyze information, and remember context to provide you with precise, intelligent answers.
+                  </p>
+                </motion.div>
+              </div>
+            ) : (
+              <div className="py-8">
+                <AnimatePresence mode="popLayout">
+                  {messages.map((msg, i) => (
+                    <MessageBubble
+                      key={i}
+                      role={msg.role}
+                      text={msg.text}
+                      index={i}
+                    />
+                  ))}
+                  {loading && <TypingIndicator />}
+                </AnimatePresence>
+                <div ref={chatEndRef} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Input Area */}
+      <div className="flex-shrink-0 border-t border-gray-100 bg-white">
+        <div className="max-w-4xl mx-auto px-4 py-4">
+          <ChatInput onSendMessage={sendMessage} loading={loading} />
+        </div>
       </div>
     </div>
   );

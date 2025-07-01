@@ -20,36 +20,30 @@ export default function ChatInput({ onSendMessage, loading }: ChatInputProps) {
   };
 
   return (
-    <motion.form
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2 }}
-      onSubmit={handleSubmit}
-      className="relative"
-    >
+    <form onSubmit={handleSubmit} className="relative">
       <div className="relative flex items-center">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask me to research anything..."
+          placeholder="Message Recuri..."
           disabled={loading}
-          className="w-full pl-5 pr-12 py-3.5 bg-slate-50 border border-slate-200 rounded-xl 
-                   focus:outline-none focus:ring-1 focus:ring-slate-400 focus:border-slate-400
+          className="w-full pl-4 pr-12 py-3 bg-white border border-gray-200 rounded-xl 
+                   focus:outline-none focus:ring-1 focus:ring-slate-300 focus:border-slate-300
                    disabled:opacity-50 disabled:cursor-not-allowed
                    text-slate-800 placeholder-slate-500
-                   transition-all duration-200 text-sm font-light"
+                   transition-all duration-200 text-sm shadow-sm"
           autoFocus
         />
         
         <motion.button
           type="submit"
           disabled={loading || !input.trim()}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className="absolute right-2 p-2 bg-slate-900 text-white rounded-lg 
-                   disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
-                   transition-all duration-200"
+                   disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100
+                   transition-all duration-200 shadow-sm"
         >
           {loading ? (
             <Loader2 size={16} className="animate-spin" />
@@ -58,16 +52,6 @@ export default function ChatInput({ onSendMessage, loading }: ChatInputProps) {
           )}
         </motion.button>
       </div>
-      
-      <div className="flex items-center justify-between mt-3 px-1">
-        <p className="text-xs text-slate-400 font-light">
-          Intelligent • Contextual • Memorable
-        </p>
-        <div className="flex items-center space-x-1.5">
-          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-          <span className="text-xs text-slate-400 font-light">Live</span>
-        </div>
-      </div>
-    </motion.form>
+    </form>
   );
 }
