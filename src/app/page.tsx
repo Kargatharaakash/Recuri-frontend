@@ -8,9 +8,15 @@ import ChatInput from "../components/ChatInput";
 import HowItWorks, { HowItWorksButton } from "../components/HowItWorks";
 import { Search, Sparkles, Github } from "lucide-react";
 
+type Source = {
+  title: string;
+  url: string;
+};
+
 type Message = {
   role: "user" | "agent";
   text: string;
+  sources?: Source[];
 };
 
 export default function ChatbotPage() {
@@ -30,7 +36,7 @@ export default function ChatbotPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://recuri-backend.onrender.com/api/query", {
+      const res = await fetch("http://127.0.0.1:8000/api/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: userInput }),
@@ -46,6 +52,7 @@ export default function ChatbotPage() {
           text:
             data.result ||
             "I couldn't find comprehensive information for your query. Please try rephrasing or asking something more specific.",
+          sources: Array.isArray(data.sources) ? data.sources : undefined,
         },
       ]);
     } catch (err) {
@@ -164,11 +171,12 @@ export default function ChatbotPage() {
                       role={msg.role}
                       text={msg.text}
                       index={i}
+                      sources={msg.sources}
                     />
                   ))}
                   {loading && <TypingIndicator />}
                 </AnimatePresence>
-                <div ref={chatEndRef} />
+
               </div>
             )}
           </div>
@@ -184,3 +192,4 @@ export default function ChatbotPage() {
     </div>
   );
 }
+
